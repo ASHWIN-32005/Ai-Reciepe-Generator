@@ -12,15 +12,16 @@ export const useRecipe = () => {
 };
 
 export const RecipeProvider = ({ children }) => {
-  const [ingredients,       setIngredients]       = useState([]);
-  const [recipe,            setRecipe]            = useState(null);
-  const [suggestions,       setSuggestions]       = useState([]);
-  const [savedRecipes,      setSavedRecipes]      = useState([]);
-  const [loading,           setLoading]           = useState(false);
-  const [error,             setError]             = useState(null);
+  const [ingredients, setIngredients] = useState([]);
+  const [recipe, setRecipe] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [savedRecipes, setSavedRecipes] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [dietaryPreference, setDietaryPreference] = useState("");
 
-  const API_BASE = "/api/recipes";
+  // Updated API Base URL
+  const API_BASE = `${import.meta.env.VITE_API_URL}/api/recipes`;
 
   const analyzeImage = useCallback(async (imageFile) => {
     setLoading(true);
@@ -136,13 +137,17 @@ export const RecipeProvider = ({ children }) => {
   }, []);
 
   const value = {
-    ingredients, setIngredients,
-    recipe, setRecipe,
+    ingredients,
+    setIngredients,
+    recipe,
+    setRecipe,
     suggestions,
     savedRecipes,
     loading,
-    error, setError,
-    dietaryPreference, setDietaryPreference,
+    error,
+    setError,
+    dietaryPreference,
+    setDietaryPreference,
     analyzeImage,
     generateRecipe,
     getRecipeSuggestions,
@@ -153,6 +158,8 @@ export const RecipeProvider = ({ children }) => {
   };
 
   return (
-    <RecipeContext.Provider value={value}>{children}</RecipeContext.Provider>
+    <RecipeContext.Provider value={value}>
+      {children}
+    </RecipeContext.Provider>
   );
-}; 
+};
